@@ -17,6 +17,7 @@
 #include "Scene.h"
 #include "Camera.h"
 
+
 using namespace std;
 
 Scene *scene;
