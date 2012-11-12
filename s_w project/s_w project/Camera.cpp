@@ -17,7 +17,6 @@ Camera::Camera(int id){
 	camera_id = id;
 }
 
-
 /** 
  * This method is used to set the name of matrix K. 
  * @author Razmik Avetisyan

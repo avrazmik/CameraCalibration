@@ -37,7 +37,7 @@ void init(void)
 	glClearColor (1.0, 1.0, 1.0, 1.0);
 	glShadeModel (GL_FLAT);
 	scene->setGrid();
-	scene->getGrid()->updateTranslateY(-5.0);
+	//scene->getGrid()->updateTranslateY(-5.0);
 	lighting();
 }
 
@@ -65,22 +65,33 @@ void display(void)
 {	
 	glLoadIdentity();
 
-	scene->lookAtMatrix().eyex(10.0).eyey(.0).eyez(-5.0).upy(1.0);
+	scene->lookAtMatrix().eyex(0.0).eyey(0.0).eyez(-5.0).upy(1.0);
 	scene->_glLookAt();
 
 	glMatrixMode (GL_MODELVIEW);
-	map<int,Camera *> cameras = scene->getCameras();
+	map<int,Camera *> initial_cameras = scene->getCameras(true);
 	glPushMatrix();
-	map<int, Camera*>::iterator it = cameras.begin();
-	GLdouble *t = (*it).second->c_t.get();
+	map<int, Camera*> cameras = scene->getCameras(false);
+
 
 	scene->getGrid()->render();
 	glPopMatrix();	
 
 	glColor3f (0.5, 0.0, 1.0);
+
+
 	
-	for(map<int,Camera *>::iterator ii=cameras.begin(); ii!=cameras.end(); ++ii)
+	for(map<int,Camera *>::iterator ii=initial_cameras.begin(); ii!=initial_cameras.end(); ++ii)
 	{
+		/*
+		if (ii == initial_cameras.begin()) {
+			Camera *tmp = (*ii).second;
+			tmp->c_t.print();
+			map<int,Camera *>::iterator it = cameras.begin();
+			Camera *tmp1 = (*it).second;
+			tmp1->c_t.print();
+		}
+		*/
 		glPushMatrix();
 		Camera *tmp = (*ii).second;
 
@@ -186,6 +197,15 @@ void processAxisMenu(int evnt)
 
 /**
  * @author: Geghetsik Dabaghyan
+ * @brief Function to handle menu events to select what is adjusted (grid or view-point)
+ */
+void processAdjustObjectMenu(int evnt)
+{
+	scene->hadleAdjustObjectMenu(evnt);
+}
+
+/**
+ * @author: Geghetsik Dabaghyan
  * @brief Function to create the menues
  */
 void createPopupMenu()
@@ -201,11 +221,16 @@ void createPopupMenu()
 	scene->menues.transformationModeMenuID = glutCreateMenu(processTransformationModeMenu);
 	glutAddMenuEntry("Translation ('t' key)", TRANSLATION);
 	glutAddMenuEntry("Rotation ('r' key)", ROTATION);
+
+	scene->menues.adjustGrid_ViewPointID = glutCreateMenu(processAdjustObjectMenu);
+	glutAddMenuEntry("Adjust grid ('g' key)", GRID);
+	glutAddMenuEntry("Adjust view-point ('v' key)", VIEW_POINT);
 	
 	scene->menues.mainMenuID = glutCreateMenu(processMainMenu);
-	glutAddSubMenu("Show axis ('a' key)", scene->menues.axisMenuID);
-	glutAddSubMenu("Show frustum ('f' key)", scene->menues.frustumMenuID);	
+	glutAddSubMenu("Adjust Grid/View-point", scene->menues.adjustGrid_ViewPointID);
 	glutAddSubMenu("Transformation mode", scene->menues.transformationModeMenuID);
+	glutAddSubMenu("Show axis ('a' key)", scene->menues.axisMenuID);
+	glutAddSubMenu("Show frustum ('f' key)", scene->menues.frustumMenuID);		
 
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
@@ -214,8 +239,8 @@ int _tmain(int argc, _TCHAR* argv[])
 {	
 	scene = Scene::getInstance();
 
-	scene->loadFileIntoMemory("C:\\Users\\Razmik\\software project\\Uni Rostock\\swp\\calibrationdata\\standard.calib");
-	
+	scene->loadFileIntoMemory("C:\\Users\\Hovo\\Documents\\standard.calib");
+
 	glutInit(&argc, (char**)argv);
 	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize (500, 500); 

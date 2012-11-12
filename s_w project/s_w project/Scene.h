@@ -31,9 +31,12 @@ struct Menues {
 	int transformationModeMenuID;
 	int frustumMenuID;
 	int axisMenuID;
+	int adjustGrid_ViewPointID;
 };
 
 enum State {OFF, ON};
+enum AdjustObject {GRID, VIEW_POINT};
+enum Transformation {TRANSLATION, ROTATION};
 
 class Scene{
 public:
@@ -53,6 +56,12 @@ public:
 	bool getShowFrustumsState();
 	bool getShowLocalCoordAxes();
 
+	void setTransformationMode(Transformation);
+	Transformation getTransformationMode();
+
+	void setAdjustObject(AdjustObject);
+	AdjustObject getAdjustObject();
+
 	void keyHandler(unsigned char key, int x, int y);
 	void keySpecialHandler(int key, int x, int y);
 	void mouseButtonHandler(int button, int state, int x, int y);
@@ -63,6 +72,7 @@ public:
 	
 	struct Menues menues;
 	void handleMainMenu(int);
+	void hadleAdjustObjectMenu(int);
 	void handleTransformationModeMenu(int);
 	void handleFrustumMenu(int);
 	void handleAxisMenu(int);
@@ -77,8 +87,14 @@ private:
 	map<int, Camera *> static_cameras;
 	map<int, Camera *> cameras;
 	vector<string> file_data;
+
+	/// State variables:
 	bool show_frustums;
 	bool show_local_coord_axes;
+	AdjustObject adjustObject;
+	Transformation transformationMode;
+
+
 	struct Mouse mouse;
 	Grid grid;
 	LookAt look_at;

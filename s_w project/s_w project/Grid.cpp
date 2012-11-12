@@ -17,7 +17,7 @@ void Grid::updateTranslateX(double dX)
 {
 	list<Camera*>::iterator it;
 	for (it = cameras.begin(); it != cameras.end(); it++) {
-		(*it)->updateTranslation(-dX, 0, 0);
+		(*it)->updateTranslation(dX, 0, 0);
 	}
 	translation.updateX(dX);
 }
@@ -30,7 +30,7 @@ void Grid::updateTranslateY(double dY)
 {
 	list<Camera*>::iterator it;
 	for (it = cameras.begin(); it != cameras.end(); it++) {
-		(*it)->updateTranslation(0, -dY, 0);
+		(*it)->updateTranslation(0, dY, 0);
 	}
 	translation.updateY(dY);
 }
@@ -43,7 +43,7 @@ void Grid::updateTranslateZ(double dZ)
 {
 	list<Camera*>::iterator it;
 	for (it = cameras.begin(); it != cameras.end(); it++) {
-		(*it)->updateTranslation(0, 0, -dZ);
+		(*it)->updateTranslation(0, 0, dZ);
 	}
 	translation.updateZ(dZ);
 }
@@ -56,11 +56,13 @@ void Grid::updateRotationX(double angle)
 {
 	Matrix2d* rot = getXRotationMatrix(angle);
 	rotation = rotation * (*rot);
+	Matrix2d* rot_cam = getXRotationMatrix(-angle);
 	list<Camera*>::iterator it;
 	for (it = cameras.begin(); it != cameras.end(); it++) {
-		(*it)->updateRotation(rot);
+		(*it)->updateRotation(rot_cam);
 	}
 	delete rot;
+	delete rot_cam;
 }
 /**
  * @author: Geghetsik Dabaghyan
@@ -71,11 +73,13 @@ void Grid::updateRotationY(double angle)
 {
 	Matrix2d* rot = getYRotationMatrix(angle);
 	rotation = rotation * (*rot);
+	Matrix2d* rot_cam = getYRotationMatrix(-angle);
 	list<Camera*>::iterator it;
 	for (it = cameras.begin(); it != cameras.end(); it++) {
-		(*it)->updateRotation(rot);		
+		(*it)->updateRotation(rot_cam);		
 	}
 	delete rot;
+	delete rot_cam;
 }
 /**
  * @author: Geghetsik Dabaghyan
@@ -86,11 +90,13 @@ void Grid::updateRotationZ(double angle)
 {
 	Matrix2d* rot = getZRotationMatrix(angle);
 	rotation = rotation * (*rot);
+	Matrix2d* rot_cam = getZRotationMatrix(-angle);
 	list<Camera*>::iterator it;
 	for (it = cameras.begin(); it != cameras.end(); it++) {
-		(*it)->updateRotation(rot);
+		(*it)->updateRotation(rot_cam);
 	}
 	delete rot;
+	delete rot_cam;
 }
 /** 
  * Default constructor 
@@ -99,7 +105,7 @@ Grid::Grid()
 {
 	rows = 10;
 	cols = 10;
-	transformationMode = TRANSLATION;
+
 	GLdouble t[3] = {0};
 	translation.set(t);
 
@@ -117,11 +123,11 @@ void Grid::render()
 {
 	glPushMatrix();
 
-	GLdouble* t = this->getTranslationVector().get();
+	GLdouble* t = getTranslationVector().get();
+	glMultMatrixd(getRotationMatrix().homogeneous());
 	glTranslatef(t[0], t[1], t[2]);
-
+	
 	glClear (GL_COLOR_BUFFER_BIT);
-
 	
 	//glRotated(45.0, 1, 1, 0);
 
@@ -179,23 +185,7 @@ void Grid::addCamera(Camera* camera)
 {
 	cameras.push_back(camera);
 }
-/**
- * @author: Geghetsik Dabaghyan
- * @brief Method to set the transformation mode
- * @param mode Transformation kind to be set
- */
-void Grid::setTransformationMode(Transformation mode)
-{
-	transformationMode = mode;
-}
-/**
- * @author: Geghetsik Dabaghyan
- * @brief Method to get the transformation mode
- */
-Transformation Grid::getTransformationMode()
-{
-	return transformationMode;
-}
+
 /**
  * @author: Geghetsik Dabaghyan
  * @brief Method-helper to get a rotation matrix representing rotation around 'x' axis

@@ -119,11 +119,13 @@ Matrix2d Matrix2d::operator* (Matrix2d data)
 	GLdouble *tmp = data.get();
 	GLdouble temp[3][3];
 	
-	for (int i = 0; i < 3; i++)
-		for (int j = 0; j < 3; j++)
-			temp[i][j] = (tmp[j] * m[2][i])+ (tmp[1*3 + j] * m[1][i]) + (tmp[2*3 + j] * m[0][i]);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			temp[i][j] = (m[i][0] * tmp[0*3 + j]) + (m[i][1] * tmp[1*3 + j]) + (m[i][2] * tmp[2*3 + j]);
+		}
+	}
 
-	Matrix2d obj(temp);
+	Matrix2d obj(temp);	
 	return obj;
 }
 

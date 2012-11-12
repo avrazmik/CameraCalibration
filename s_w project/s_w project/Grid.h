@@ -16,7 +16,7 @@
 
 using namespace std;
 
-enum Transformation {TRANSLATION, ROTATION};
+
 const double pi = 3.14;
 
 class Grid{
@@ -30,8 +30,7 @@ public:
 	void updateRotationY(double);
 	void updateRotationZ(double);
 	void addCamera(Camera*);
-	void setTransformationMode(Transformation);
-	Transformation getTransformationMode();
+
 
 	// Helper functions
 	Matrix2d* getXRotationMatrix(double);
@@ -48,7 +47,6 @@ private:
 	Matrix2d rotation;
 	int rows;
 	int cols;
-	double width;
-	Transformation transformationMode;
+	double width;	
 	float i, j;	
 };
