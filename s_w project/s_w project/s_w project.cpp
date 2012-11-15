@@ -39,6 +39,7 @@ void init(void)
 	scene->setGrid();
 	//scene->getGrid()->updateTranslateY(-5.0);
 	lighting();
+	scene->lookAtMatrix().eyex(0.0).eyey(0.0).eyez(-5.0).centerz(-1).upy(1.0);
 }
 
 void lighting()
@@ -65,7 +66,7 @@ void display(void)
 {	
 	glLoadIdentity();
 
-	scene->lookAtMatrix().eyex(0.0).eyey(0.0).eyez(-5.0).upy(1.0);
+	
 	scene->_glLookAt();
 
 	glMatrixMode (GL_MODELVIEW);

@@ -81,6 +81,8 @@ public:
 	void lookAtMatrix(LookAt data);
 	LookAt & lookAtMatrix();
 	void _glLookAt();
+	void rotateViewLeftRight(double);
+	void rotateViewUpDown(double);
 private:
 	Scene();
 	static Scene * instance;
