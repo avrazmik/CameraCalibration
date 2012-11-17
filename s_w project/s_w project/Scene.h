@@ -42,6 +42,8 @@ class Scene{
 public:
 	void loadFileIntoMemory(char *);
 	void loadCalibrationData();
+	void saveCalibrationData(string&);
+	void saveHeaders(ofstream&);
 	void loadHeaders();
 	void loadCameraData();
 	int getCameraCount();
@@ -89,6 +91,7 @@ private:
 	map<int, Camera *> static_cameras;
 	map<int, Camera *> cameras;
 	vector<string> file_data;
+	std::string calibrationFile;
 
 	/// State variables:
 	bool show_frustums;

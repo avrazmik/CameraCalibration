@@ -7,6 +7,7 @@
 
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <GL/glut.h>
 #include <iomanip>
 #include "string"
@@ -29,6 +30,7 @@ public:
 	string _getCameraR();
 	string _getCameraDistortion();
 	string _getCameraT();
+	int getCameraID();
 
 	Matrix2d c_K;
 	Matrix2d c_R;
@@ -38,6 +40,8 @@ public:
 	void print();
 	void updateTranslation(double, double, double);
 	void updateRotation(Matrix2d*);
+
+	void saveCalibrationData(ofstream&, int);
 private:
 	int camera_id;
 	string _distortion;

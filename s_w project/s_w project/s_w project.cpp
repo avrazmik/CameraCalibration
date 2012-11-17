@@ -166,7 +166,10 @@ void mouseMove(int x, int y)
  */
 void processMainMenu(int evnt)
 {
-	scene->handleMainMenu(evnt);
+	//scene->handleMainMenu(evnt);
+	if (ON == evnt) {
+		scene->saveCalibrationData(string("C:\\Users\\Hovo\\Documents\\standard - Copy.calib"));
+	}
 }
 
 /**
@@ -232,6 +235,7 @@ void createPopupMenu()
 	glutAddSubMenu("Transformation mode", scene->menues.transformationModeMenuID);
 	glutAddSubMenu("Show axis ('a' key)", scene->menues.axisMenuID);
 	glutAddSubMenu("Show frustum ('f' key)", scene->menues.frustumMenuID);		
+	glutAddMenuEntry("Save current calibration state ('s' key)", ON);
 
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
@@ -241,6 +245,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	scene = Scene::getInstance();
 
 	scene->loadFileIntoMemory("C:\\Users\\Hovo\\Documents\\standard.calib");
+	//scene->loadFileIntoMemory("C:\\Users\\Hovo\\Documents\\standard - Copy.calib");
 
 	glutInit(&argc, (char**)argv);
 	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);

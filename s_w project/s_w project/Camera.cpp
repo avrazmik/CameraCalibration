@@ -167,3 +167,56 @@ void Camera::updateRotation(Matrix2d* rot)
 {
 	c_R = c_R * (*rot);
 }
+
+/**
+ * @author: Geghetsik Dabaghyan
+ * @brief Method get the camera ID
+ * @return Camera ID
+ */
+int Camera::getCameraID()
+{
+	return camera_id;
+}
+
+/**
+ * @author: Geghetsik Dabaghyan
+ * @brief Method save the calibration data of the camera into file
+ * @param file File to save the calibration data into
+ * @param num Number of the camera
+ */
+void Camera::saveCalibrationData(ofstream& file, int num)
+{
+	if (!file.is_open()) {
+		cerr << "Error: Cannot save headers, file is not opened" << endl;
+		exit(1);
+	}
+	/// Save the camera K matrix
+	file << "cam" << num << "_K=[" << endl;
+	GLdouble* K = c_K.get();
+	file << scientific 
+		 << "\t" << K[0] << "  " << K[1] << "  " << K[2] << ";" << endl
+	     << "\t" << K[3] << "  " << K[4] << "  " << K[5] << ";" << endl
+		 << "\t" << K[6] << "  " << K[7] << "  " << K[8] << endl;
+	file << "]" << endl;
+
+	/// Save the camera R matrix
+	file << "cam" << num << "_R=[" << endl;
+	GLdouble* R = c_R.get();
+	file << scientific 
+		 << "\t" << R[0] << "  " << R[1] << "  " << R[2] << ";" << endl
+	     << "\t" << R[3] << "  " << R[4] << "  " << R[5] << ";" << endl
+		 << "\t" << R[6] << "  " << R[7] << "  " << R[8] << endl;
+	file << "]" << endl;
+
+	/// Save the camera distortion matrix
+	file << "cam" << num << "_distortion=[" << endl;
+	GLdouble* d = c_d.get();
+	file << scientific << d[0] << " " << d[1] << " " << d[2] << " " << d[3] << " " << d[4] << endl;
+	file << "]" << endl;
+
+	/// Save the camera t matrix
+	file << "cam" << num << "_t=[" << endl;
+	GLdouble* t = c_t.get();
+	file << scientific << "\t" << t[0] << "  " << t[1] << "  " << t[2] << endl;
+	file << "]" << endl;
+}
