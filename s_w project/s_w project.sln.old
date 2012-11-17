@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "s_w project", "s_w project\s_w project.vcxproj", "{6BFC0B06-8966-4542-A779-9164053E4955}"
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "s_w project", "s_w project\s_w project.vcproj", "{6BFC0B06-8966-4542-A779-9164053E4955}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
