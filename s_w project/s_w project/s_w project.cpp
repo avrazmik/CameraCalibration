@@ -93,8 +93,12 @@ void display(void)
 			tmp1->c_t.print();
 		}
 		*/
+
+
 		glPushMatrix();
 		Camera *tmp = (*ii).second;
+
+		tmp->print();
 
 		GLdouble *t = tmp->c_t.get();
 		
@@ -244,8 +248,8 @@ int _tmain(int argc, _TCHAR* argv[])
 {	
 	scene = Scene::getInstance();
 
-	scene->loadFileIntoMemory("C:\\Users\\Hovo\\Documents\\standard.calib");
-	//scene->loadFileIntoMemory("C:\\Users\\Hovo\\Documents\\standard - Copy.calib");
+	//scene->loadFileIntoMemory("C:\\Users\\Hovo\\Documents\\standard.calib");
+	scene->loadFileIntoMemory("C:\\Users\\Razmik\\software project\\Uni Rostock\\swp\\calibrationdata\\standard.calib");
 
 	glutInit(&argc, (char**)argv);
 	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
@@ -253,7 +257,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	glutInitWindowPosition (100, 100);
 
 	glutCreateWindow ((char*)argv[0]);
-	init ();
+	init();
 	glutDisplayFunc(display); 
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keyboard);

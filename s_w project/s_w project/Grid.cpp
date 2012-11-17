@@ -21,6 +21,7 @@ void Grid::updateTranslateX(double dX)
 	}
 	translation.updateX(dX);
 }
+
 /**
  * @author: Geghetsik Dabaghyan
  * @brief Method to set the 'y' coordinate of translation vector
@@ -34,6 +35,7 @@ void Grid::updateTranslateY(double dY)
 	}
 	translation.updateY(dY);
 }
+
 /**
  * @author: Geghetsik Dabaghyan
  * @brief Method to set the 'z' coordinate of translation vector
@@ -47,6 +49,7 @@ void Grid::updateTranslateZ(double dZ)
 	}
 	translation.updateZ(dZ);
 }
+
 /**
  * @author: Geghetsik Dabaghyan
  * @brief Method to add rotation around 'x' axis
@@ -64,6 +67,7 @@ void Grid::updateRotationX(double angle)
 	delete rot;
 	delete rot_cam;
 }
+
 /**
  * @author: Geghetsik Dabaghyan
  * @brief Method to add rotation around 'y' axis
@@ -117,7 +121,7 @@ Grid::Grid()
 
 /** 
  * This method is used to render the grid. 
- * @author Razmik Avetisyan
+ * @author Mikael Egibyan
  */
 void Grid::render()
 {
