@@ -98,7 +98,7 @@ void display(void)
 		glPushMatrix();
 		Camera *tmp = (*ii).second;
 
-		tmp->print();
+		//tmp->print();
 
 		GLdouble *t = tmp->c_t.get();
 		
