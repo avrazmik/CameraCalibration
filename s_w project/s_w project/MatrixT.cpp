@@ -89,3 +89,12 @@ void MatrixT::updateZ(double dZ)
 {
 	m[2] += dZ;
 }
+
+/** 
+ * This method is used to make current matrix zero matrix
+ * @author Razmik Avetisyan
+ */
+void MatrixT::zero()
+{
+	m[0] = 0;	m[1] = 0;	m[2] = 0;
+}

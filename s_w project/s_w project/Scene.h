@@ -85,6 +85,8 @@ public:
 	void _glLookAt();
 	void rotateViewLeftRight(double);
 	void rotateViewUpDown(double);
+
+	void updateStaticCameras();
 private:
 	Scene();
 	static Scene * instance;

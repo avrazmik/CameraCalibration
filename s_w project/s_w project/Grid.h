@@ -31,6 +31,7 @@ public:
 	void updateRotationZ(double);
 	void addCamera(Camera*);
 
+	void returnGridToOrigin();
 
 	// Helper functions
 	Matrix2d* getXRotationMatrix(double);

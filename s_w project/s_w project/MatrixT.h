@@ -20,6 +20,7 @@ public:
 	void updateX(double);
 	void updateY(double);
 	void updateZ(double);
+	void zero();
 	void print();
 private:
 	GLdouble m[3];

@@ -102,6 +102,17 @@ void Grid::updateRotationZ(double angle)
 	delete rot;
 	delete rot_cam;
 }
+
+/**
+ * @author: Geghetsik Dabaghyan
+ * @brief Method to return grid to it's original position
+ */
+void Grid::returnGridToOrigin()
+{
+	rotation.identity();
+	translation.zero();
+}
+
 /** 
  * Default constructor 
  */
@@ -110,13 +121,8 @@ Grid::Grid()
 	rows = 10;
 	cols = 10;
 
-	GLdouble t[3] = {0};
-	translation.set(t);
-
-	//GLdouble r[3][3] = {0};
-	//r[0][0] = r[1][1] = r[2][2] = 1;
+	translation.zero();
 	rotation.identity();
-	
 }
 
 /** 
