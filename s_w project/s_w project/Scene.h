@@ -40,9 +40,9 @@ enum Transformation {TRANSLATION, ROTATION};
 
 class Scene{
 public:
-	void loadFileIntoMemory(char *);
+	void loadFileIntoMemory();
 	void loadCalibrationData();
-	void saveCalibrationData(string&);
+	void saveCalibrationData();
 	void saveHeaders(ofstream&);
 	void loadHeaders();
 	void loadCameraData();
@@ -87,6 +87,7 @@ public:
 	void rotateViewUpDown(double);
 
 	void updateStaticCameras();
+	void setCalibrationFile(char *);
 private:
 	Scene();
 	static Scene * instance;

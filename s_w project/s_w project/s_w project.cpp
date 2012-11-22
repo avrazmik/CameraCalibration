@@ -172,7 +172,7 @@ void processMainMenu(int evnt)
 {
 	//scene->handleMainMenu(evnt);
 	if (ON == evnt) {
-		scene->saveCalibrationData(string("C:\\Users\\Hovo\\Documents\\standard - Copy.calib"));
+		scene->saveCalibrationData();
 	}
 }
 
@@ -244,12 +244,21 @@ void createPopupMenu()
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, char * argv[])
 {	
 	scene = Scene::getInstance();
 
-	//scene->loadFileIntoMemory("C:\\Users\\Hovo\\Documents\\standard.calib");
-	scene->loadFileIntoMemory("C:\\Users\\Razmik\\software project\\Uni Rostock\\swp\\calibrationdata\\standard.calib");
+	if(argc > 1 && argv[1] != NULL)
+	{
+		scene->setCalibrationFile(argv[1]);
+	}
+	else
+	{
+		scene->setCalibrationFile("C:\\Users\\Razmik\\software project\\Uni Rostock\\swp\\calibrationdata\\standard.calib");
+		//scene->setCalibrationFile("C:\\Users\\Hovo\\Documents\\standard.calib");
+	}
+	
+	scene->loadFileIntoMemory();
 
 	glutInit(&argc, (char**)argv);
 	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
