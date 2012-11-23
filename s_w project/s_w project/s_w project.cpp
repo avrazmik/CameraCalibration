@@ -12,7 +12,7 @@
 #include <GL/glut.h>
 #include <GL/glu.h>
 #include <GL/gl.h>
-
+#include <math.h>
 
 #include "Scene.h"
 #include "Camera.h"
@@ -37,11 +37,17 @@ void init(void)
 	glClearColor (1.0, 1.0, 1.0, 1.0);
 	glShadeModel (GL_FLAT);
 	scene->setGrid();
-	//scene->getGrid()->updateTranslateY(-5.0);
+	scene->loadCameraModels();
+	scene->getShowFrustumsState();
 	lighting();
 	scene->lookAtMatrix().eyex(0.0).eyey(0.0).eyez(-5.0).centerz(-1).upy(1.0);
 }
 
+
+/**
+ * @author: Razmik Avetisyan
+ * @brief Function is use to enable light
+ */
 void lighting()
 {
 	glEnable(GL_LIGHT0);
@@ -70,47 +76,8 @@ void display(void)
 	scene->_glLookAt();
 
 	glMatrixMode (GL_MODELVIEW);
-	map<int,Camera *> initial_cameras = scene->getCameras(true);
-	glPushMatrix();
-	map<int, Camera*> cameras = scene->getCameras(false);
+	scene->render();
 
-
-	scene->getGrid()->render();
-	glPopMatrix();	
-
-	glColor3f (0.5, 0.0, 1.0);
-
-
-	
-	for(map<int,Camera *>::iterator ii=initial_cameras.begin(); ii!=initial_cameras.end(); ++ii)
-	{
-		/*
-		if (ii == initial_cameras.begin()) {
-			Camera *tmp = (*ii).second;
-			tmp->c_t.print();
-			map<int,Camera *>::iterator it = cameras.begin();
-			Camera *tmp1 = (*it).second;
-			tmp1->c_t.print();
-		}
-		*/
-
-
-		glPushMatrix();
-		Camera *tmp = (*ii).second;
-
-		//tmp->print();
-
-		GLdouble *t = tmp->c_t.get();
-		
-		glTranslated(-t[0], -t[1], -t[2]);
-
-		glMultMatrixd(tmp->c_R.homogeneous());
-		
-		glScalef(2.0, 1.0, 1.0);
-		glutSolidCube(0.2);
-		glPopMatrix();
-		
-	}
 	glutSwapBuffers();	
 	glFlush();
 }
@@ -196,6 +163,16 @@ void processFrustumMenu(int evnt)
 
 /**
  * @author: Geghetsik Dabaghyan
+ * @brief Function to handle viewing anle menu events
+ */
+void processViewAngleMenu(int evnt)
+{
+	scene->handleViewAngleMenu(evnt);
+}
+
+
+/**
+ * @author: Geghetsik Dabaghyan
  * @brief Function to handle axis visibility menu events
  */
 void processAxisMenu(int evnt)
@@ -222,6 +199,10 @@ void createPopupMenu()
 	glutAddMenuEntry("On", ON);
 	glutAddMenuEntry("Off", OFF);
 
+    scene->menues.view_agleMenuID = glutCreateMenu(processViewAngleMenu);
+	glutAddMenuEntry("On", ON);
+	glutAddMenuEntry("Off", OFF);
+
 	scene->menues.frustumMenuID = glutCreateMenu(processFrustumMenu);
 	glutAddMenuEntry("On", ON);
 	glutAddMenuEntry("Off", OFF);
@@ -238,7 +219,8 @@ void createPopupMenu()
 	glutAddSubMenu("Adjust Grid/View-point", scene->menues.adjustGrid_ViewPointID);
 	glutAddSubMenu("Transformation mode", scene->menues.transformationModeMenuID);
 	glutAddSubMenu("Show axis ('a' key)", scene->menues.axisMenuID);
-	glutAddSubMenu("Show frustum ('f' key)", scene->menues.frustumMenuID);		
+	glutAddSubMenu("Show frustum ('f' key)", scene->menues.frustumMenuID);	
+	glutAddSubMenu("Show viewing angle ('q' key)", scene->menues.view_agleMenuID);
 	glutAddMenuEntry("Save current calibration state ('s' key)", ON);
 
 	glutAttachMenu(GLUT_RIGHT_BUTTON);

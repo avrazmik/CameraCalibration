@@ -175,6 +175,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\glm.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Grid.cpp"
 				>
 			</File>
@@ -233,6 +237,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\glm.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Grid.h"
 				>
 			</File>
@@ -250,6 +258,10 @@
 			</File>
 			<File
 				RelativePath=".\MatrixT.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Model.h"
 				>
 			</File>
 			<File

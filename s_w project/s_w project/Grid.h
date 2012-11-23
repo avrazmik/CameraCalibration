@@ -39,9 +39,6 @@ public:
 	Matrix2d* getZRotationMatrix(double);
 	Matrix2d getRotationMatrix();
 	MatrixT getTranslationVector();
-
-	// this is for testing
-	bool axes;
 private:
 	list<Camera*> cameras;
 	MatrixT translation;

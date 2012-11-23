@@ -32,6 +32,7 @@ struct Menues {
 	int frustumMenuID;
 	int axisMenuID;
 	int adjustGrid_ViewPointID;
+	int view_agleMenuID;
 };
 
 enum State {OFF, ON};
@@ -40,12 +41,14 @@ enum Transformation {TRANSLATION, ROTATION};
 
 class Scene{
 public:
+	void render();
 	void loadFileIntoMemory();
 	void loadCalibrationData();
 	void saveCalibrationData();
 	void saveHeaders(ofstream&);
 	void loadHeaders();
 	void loadCameraData();
+	void loadCameraModels();
 	int getCameraCount();
 	map<int, Camera *> getCameras(bool staticCameras=false);
 	Camera * getCameraByID(int);
@@ -54,9 +57,12 @@ public:
 
 	void toggleShowFrustums();
 	void toggleShowLocalCoordAxes();
+	void toggleShowViewAngle();
 
 	bool getShowFrustumsState();
 	bool getShowLocalCoordAxes();
+	bool getShowLabels();
+	bool getShowViewAngle();
 
 	void setTransformationMode(Transformation);
 	Transformation getTransformationMode();
@@ -77,6 +83,7 @@ public:
 	void hadleAdjustObjectMenu(int);
 	void handleTransformationModeMenu(int);
 	void handleFrustumMenu(int);
+	void handleViewAngleMenu(int);
 	void handleAxisMenu(int);
 	
 	void lookAtMatrix(GLdouble data[3][3]);
@@ -98,7 +105,9 @@ private:
 
 	/// State variables:
 	bool show_frustums;
+	bool show_view_angle;
 	bool show_local_coord_axes;
+	bool show_labels;
 	AdjustObject adjustObject;
 	Transformation transformationMode;
 

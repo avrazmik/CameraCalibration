@@ -136,51 +136,43 @@ void Grid::render()
 	GLdouble* t = getTranslationVector().get();
 	glMultMatrixd(getRotationMatrix().homogeneous());
 	glTranslatef(t[0], t[1], t[2]);
-	
-	glClear (GL_COLOR_BUFFER_BIT);
-	
-	//glRotated(45.0, 1, 1, 0);
+
+	glClear (GL_COLOR_BUFFER_BIT);	
+	string grid_origin = "0, 0, 0";
+	glRasterPos3f(0.0, 0.2, 0.0);
+	for(i=0; i<grid_origin.length();i++)
+	{
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_10, grid_origin[i]);
+	}
 
 	glColor3f (0.5, 0.0, 1.0);
 
     glBegin(GL_LINES);
-		for(i=-2.5; i<=2.5; i+=0.5) {
-			glVertex3f(i, 0.0, -2.5);
-			glVertex3f(i, 0.0, 2.5);
+		for(i=-3.5; i<=3.5; i+=0.5) {
+			glVertex3f(i, 0.0, -3.5);
+			glVertex3f(i, 0.0, 3.5);
 		}
 
-		for(j=-2.5; j<=2.5; j+=0.5) {
-			glVertex3f(-2.5, 0.0, j);
-			glVertex3f(2.5, 0.0, j);
+		for(j=-3.5; j<=3.5; j+=0.5) {
+			glVertex3f(-3.5, 0.0, j);
+			glVertex3f(3.5, 0.0, j);
 		}
 
-		if (axes) {
-			// draw 'x' axis
-			glColor3f (0.0, 1.0, 1.0);
-			glVertex3f(-10.0, 0.0, 0.0);
-			glVertex3f(10.0, 0.0, 0.0);
+		// draw 'x' axis
+		glColor3f (0.0, 1.0, 1.0);
+		glVertex3f(-10.0, 0.0, 0.0);
+		glVertex3f(10.0, 0.0, 0.0);
 
-			// draw 'y' axis
-			glColor3f (0.0, 1.0, 0.0);
-			glVertex3f(0.0, -10.0,0.0);
-			glVertex3f(0.0, 10.0, 0.0);
+		// draw 'y' axis
+		glColor3f (0.0, 1.0, 0.0);
+		glVertex3f(0.0, -10.0,0.0);
+		glVertex3f(0.0, 10.0, 0.0);
 
-			// draw 'z' axis
-			glColor3f (1.0, 0.0, 0.0);
-			glVertex3f(0.0, 0.0, -10.0);
-			glVertex3f(0.0, 0.0, 10.0);
-		}
-		/*
-	glColor3f(1.0, 2.0, 1.0);
-    glVertex3f(-6.0, 0.0, 0.0);
-   glVertex3f(6.0, 0.0, 0.0);
+		// draw 'z' axis
+		glColor3f (1.0, 0.0, 0.0);
+		glVertex3f(0.0, 0.0, -10.0);
+		glVertex3f(0.0, 0.0, 10.0);
 
-   glVertex3f(5.0, 0.0, 1.0);
-   glVertex3f(6.0, 0.0, 0.0);
-
-   glVertex3f(5.0, 0.0, -1.0);
-   glVertex3f(6.0, 0.0, 0.0);
-   */
 	glEnd();
 	glPopMatrix();
 

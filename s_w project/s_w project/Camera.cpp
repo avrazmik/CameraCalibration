@@ -220,3 +220,214 @@ void Camera::saveCalibrationData(ofstream& file, int num)
 	file << scientific << "\t" << t[0] << "  " << t[1] << "  " << t[2] << endl;
 	file << "]" << endl;
 }
+
+/** 
+ * This method is used to render camera models 
+ * @author Mikael Egibyan
+ */
+void Camera::render()
+{
+	glPushMatrix();
+
+		GLdouble *t = c_t.get();
+		glTranslated(-t[0], -t[1], -t[2]);
+		glMultMatrixd(c_R.homogeneous());
+		glScalef(0.001, 0.001, 0.001);
+		model->render();
+	
+	glPopMatrix();
+}
+
+/** 
+ * This method is used to render camera labels 
+ * @author Mikael Egibyan
+ */
+void Camera::renderLabel(int index)
+{
+	glPushMatrix();
+
+	GLdouble *t = c_t.get();
+	glTranslated(-t[0], -t[1], -t[2]);
+	glMultMatrixd(c_R.homogeneous());
+	char buf[10];
+	string cam = "C " + string(itoa(index, buf, 10)); 
+	glRasterPos3f(0.0, 0.2, 0.0);
+	for (int i = 0; i < cam.length(); i++) 
+	{
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_10, cam[i]);
+	}
+
+	glFlush();
+	glPopMatrix();
+}
+
+/** 
+ * @This method is used to render local coordinate system for all cameras 
+ * @author Mikael Egibyan
+ */
+void Camera::renderLocalCoordFrame()
+{
+	glPushMatrix();
+
+		GLdouble *t = c_t.get();
+		glTranslated(-t[0], -t[1], -t[2]);
+		glMultMatrixd(c_R.homogeneous());
+			glBegin(GL_LINES);	
+			// draw 'x' axis
+			glColor3f (1.0, 1.0, 1.0);
+			glVertex3f(0.2, 0.0, 0.0);
+			glVertex3f(0.0, 0.0, 0.0);
+			
+			glColor3f (1.0, 1.0, 1.0);
+			glVertex3f(0.2, 0.0, 0.0);
+			glVertex3f(0.17, 0.05, 0.0);
+
+			glColor3f (1.0, 1.0, 1.0);
+			glVertex3f(0.2, 0.0, 0.0);
+			glVertex3f(0.17, -0.05, 0.0);
+
+			// draw 'y' axis
+			glColor3f (1.0, 1.0, 0.0);
+			glVertex3f(0.0, 0.2,0.0);
+			glVertex3f(0.0, 0.0, 0.0);
+
+			glColor3f (1.0, 1.0, 1.0);
+			glVertex3f(0.0, 0.2, 0.0);
+			glVertex3f(0.05, 0.17, 0.0);
+
+			glColor3f (1.0, 1.0, 1.0);
+			glVertex3f(0.0, 0.2, 0.0);
+			glVertex3f(-0.05, 0.17, 0.0);
+
+			// draw 'z' axis
+			glColor3f (1.0, 1.0, 1.0);
+			glVertex3f(0.0, 0.0, 0.2);
+			glVertex3f(0.0, 0.0, 0.0);	
+
+			glColor3f (1.0, 1.0, 1.0);
+			glVertex3f(0.0, 0.0, 0.2);
+			glVertex3f(0.05, 0.0, 0.17);
+
+			glColor3f (1.0, 1.0, 1.0);
+			glVertex3f(0.0, 0.0, 0.2);
+			glVertex3f(-0.05, 0.0, 0.17);
+	
+			glEnd();
+			glFlush();
+
+		glPopMatrix();
+}
+
+/** 
+ * @This method is used to load camera models 
+ * @author Mikael Egibyan
+ */
+void Camera::loadModel()
+{
+	model = new Model();
+	model->load("camera.obj");
+	model->SetDrawOBJ(true);
+}
+
+Camera::~Camera()
+{
+	delete model;
+}
+
+/** 
+ * @This method is used to calculate camera field of view
+ * @author Mikael Egibyan
+ */
+void Camera::calculateFOV()
+{
+	GLdouble *t = c_K.get();		
+	this->hor_FOV = 2*atan(t[0*3+2]/t[0*3 + 0]);
+	this->vert_FOV = 2*atan(t[1*3+2]/t[1*3+1]);
+}
+/** 
+ * @This method is used to render camera's FOV
+ * @author Mikael Egibyan
+ */
+void Camera::renderViewAngle()
+{
+	glPushMatrix();
+
+		GLdouble *t = c_t.get();
+		glTranslated(-t[0], -t[1], -t[2]);
+		glMultMatrixd(c_R.homogeneous());
+
+		double k_x, k_y;
+		k_x =  t[0*3+0] * tan(hor_FOV/2);
+		k_y =  t[0*3+0] * tan(vert_FOV/2);
+
+		glBegin(GL_LINES);
+
+		glColor3f(1.0, 1.0, 0.0);
+		glVertex3d(0.0, 0.0, 0.0);
+		glVertex3d(k_x, 0.0, t[0*3+0]);
+
+		glColor3f(1.0, 1.0, 0.0);
+		glVertex3d(-k_x, 0.0, t[0*3+0]);
+		glVertex3d(0.0, 0.0, 0.0);
+
+		glColor3f(0.5, 0.0, 0.5);
+		glVertex3d(0.0, 0.0, 0.0);
+		glVertex3d(0.0, k_y, t[0*3+0]);
+
+		glColor3f(0.5, 0.0, 0.5);
+		glVertex3d(0.0, -k_y, t[0*3+0]);
+		glVertex3d(0.0, 0.0, 0.0);
+
+		glEnd();
+
+	glFlush();
+	glPopMatrix();
+}
+/** 
+ * @This method is used to render camera's frustum with already known FOV
+ * @author Mikael Egibyan
+ */
+void Camera::renderFrustum()
+{
+	glPushMatrix();
+
+		GLdouble *t = c_t.get();
+		glTranslated(-t[0], -t[1], -t[2]);
+		glMultMatrixd(c_R.homogeneous());
+
+		double l_x, l_y;
+		l_x = t[0*3+0] * 1/(tan(vert_FOV/2)) * tan(hor_FOV/2);
+		l_y = t[0*3+0] * 1/(tan(hor_FOV/2)) * tan(vert_FOV/2);
+
+		glColor3f(0.8, 0.0, 0.0);
+		glBegin(GL_LINES);
+
+		glVertex3d(0.0, 0.0, 0.0);
+		glVertex3d(l_x, l_y, t[0*3+0]);
+
+		glVertex3d(0.0, 0.0, 0.0);
+		glVertex3d(-l_x, l_y, t[0*3+0]);
+
+		glVertex3d(0.0, 0.0, 0.0);
+		glVertex3d(-l_x, -l_y, t[0*3+0]);
+
+		glVertex3d(0.0, 0.0, 0.0);
+		glVertex3d(l_x, -l_y, t[0*3+0]);
+		
+		glVertex3d(l_x, l_y, t[0*3+0]);
+		glVertex3d(-l_x, l_y, t[0*3+0]);
+
+		glVertex3d(-l_x, l_y, t[0*3+0]);
+		glVertex3d(-l_x, -l_y, t[0*3+0]);
+
+		glVertex3d(-l_x, -l_y, t[0*3+0]);
+		glVertex3d(l_x, -l_y, t[0*3+0]);
+		
+		glVertex3d(l_x, -l_y, t[0*3+0]);
+		glVertex3d(l_x, l_y, t[0*3+0]);
+
+		glEnd();
+
+		glFlush();
+	glPopMatrix();
+}
