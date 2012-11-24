@@ -1,90 +1,91 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Camera">
-    <Position X="5" Y="0.75" Width="1.5" />
+    <Position X="10.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AhQCAEACAAAAYBAAAACAAABEAAEAgAAAAAAEAIEAAQA=</HashCode>
-      <FileName>camera.h</FileName>
+      <HashCode>AhQCAEACAAAAYBgAQBCAAABEIAVAgAAAAAAEQIEYAQA=</HashCode>
+      <FileName>Camera.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Grid" Collapsed="true">
-    <Position X="7.75" Y="0.75" Width="1.5" />
+    <Position X="10" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAEAIAAAAAQAHAcABAAACAlgAAIAEAAAAwABA=</HashCode>
-      <FileName>grid.h</FileName>
+      <HashCode>AAAAAgAAEAIAAAAAQADAcABAAACAlgAAIAEAAAAwABA=</HashCode>
+      <FileName>Grid.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Matrix2d">
-    <Position X="0.75" Y="0.75" Width="2.25" />
+  <Class Name="Matrix2d" Collapsed="true">
+    <Position X="3" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAIAQBQQEAIAAAAAAACgAAAABAAAA=</HashCode>
-      <FileName>matrix2d.h</FileName>
+      <FileName>Matrix2d.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MatrixDistortion">
-    <Position X="3.25" Y="4" Width="1.5" />
+  <Class Name="MatrixDistortion" Collapsed="true">
+    <Position X="6.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAQAAAAAIAQAQQAAAAAAAAAAAgAAAAAAAAA=</HashCode>
-      <FileName>matrixdistortion.h</FileName>
+      <FileName>MatrixDistortion.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MatrixT">
-    <Position X="3.25" Y="0.75" Width="1.5" />
+  <Class Name="MatrixT" Collapsed="true">
+    <Position X="4.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQNAAAAAAAAAAAAAAQBQAAAAAAAAAIAAgAAAAAAAAA=</HashCode>
-      <FileName>matrixt.h</FileName>
+      <FileName>MatrixT.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Scene">
-    <Position X="10.75" Y="5.5" Width="2" />
+    <Position X="10" Y="3" Width="3.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>QAAIItAUAAI4AAAigIACQEBAUQFAAkSMh4RAAQQAACA=</HashCode>
-      <FileName>scene.h</FileName>
+      <HashCode>QAAIKtAUAAI4AAAigIACUEBAVQFAQkSMh4RAAQQQACA=</HashCode>
+      <FileName>Scene.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="LookAt">
-    <Position X="0.75" Y="4.5" Width="1.5" />
+  <Class Name="LookAt" Collapsed="true">
+    <Position X="0.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAGgAAHAAAAAAQAAAAAAAAAgAAAAI=</HashCode>
-      <FileName>lookat.h</FileName>
+      <FileName>LookAt.h</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="Mouse" Collapsed="true">
-    <Position X="7.75" Y="3" Width="1.5" />
+    <Position X="9.5" Y="1.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAABAAAAAAA=</HashCode>
-      <FileName>scene.h</FileName>
+      <FileName>Scene.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="Menues" Collapsed="true">
     <Position X="9.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAABAAAAAAAAAAgAAAAAAAAAAEAAAAABAAAAAAEAAA=</HashCode>
-      <FileName>scene.h</FileName>
+      <HashCode>AAAABAAAAAAAAAAgAAAABAAAAAEAAAAABAAAAAAEAAA=</HashCode>
+      <FileName>Scene.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Enum Name="Transformation" Collapsed="true">
-    <Position X="9.5" Y="4.25" Width="1.5" />
+    <Position X="9.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
-      <FileName>scene.h</FileName>
+      <FileName>Scene.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="State" Collapsed="true">
-    <Position X="9.5" Y="3.5" Width="1.5" />
+    <Position X="9.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAACAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>scene.h</FileName>
+      <FileName>Scene.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="AdjustObject" Collapsed="true">
-    <Position X="9.5" Y="1.75" Width="1.5" />
+    <Position X="9.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Scene.h</FileName>
